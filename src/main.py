@@ -3,6 +3,7 @@ import os
 import typer
 import shutil
 from quotes import get_quote
+from typing import Annotated
 
 def resource_path(relative_path):
     base = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -29,25 +30,34 @@ ascii_map = {
         }
 
 @app.command()
-def main():
-    size = shutil.get_terminal_size()
-    width = size.columns
-    step = 25
-    min_width = 50
-    max_width = 400
-    size_key = min((max(width, min_width) - min_width) // step * step + min_width, max_width)
-    file_path = ascii_map.get(size_key)
-
+def main(quote: Annotated[
+    bool, typer.Option()
+] = False):
     try:
-        with open(file_path, 'r') as file:
-            file_content = file.read()
-            print(file_content)
-    except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    quote = get_quote()
-    print(quote)
+        while True:
+            size = shutil.get_terminal_size()
+            width = size.columns
+            step = 25
+            min_width = 50
+            max_width = 400
+            size_key = min((max(width, min_width) - min_width) // step * step + min_width, max_width)
+            file_path = ascii_map.get(size_key)
+
+            try:
+                with open(file_path, 'r') as file:
+                    file_content = file.read()
+                    print(file_content)
+            except FileNotFoundError:
+                print(f"Error: File '{file_path}' not found.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+            if quote:
+                print(get_quote())
+
+            input()
+    except KeyboardInterrupt:
+        pass
 
 if __name__ == "__main__":
     app()
