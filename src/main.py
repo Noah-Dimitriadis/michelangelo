@@ -1,28 +1,32 @@
+import sys
+import os
 import typer
-from quotes import get_quote
 import shutil
+from quotes import get_quote
 
+def resource_path(relative_path):
+    base = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, relative_path)
 
 app = typer.Typer()
 
 ascii_map = {
-            50: "../creation_of_ascii/50.txt",
-            75: "../creation_of_ascii/75.txt",
-            100: "../creation_of_ascii/100.txt",
-            125: "../creation_of_ascii/125.txt",
-            150: "../creation_of_ascii/150.txt",
-            175: "../creation_of_ascii/175.txt",
-            200: "../creation_of_ascii/200.txt",
-            225: "../creation_of_ascii/225.txt",
-            250: "../creation_of_ascii/250.txt",
-            275: "../creation_of_ascii/275.txt",
-            300: "../creation_of_ascii/300.txt",
-            325: "../creation_of_ascii/325.txt",
-            350: "../creation_of_ascii/350.txt",
-            375: "../creation_of_ascii/375.txt",
-            400: "../creation_of_ascii/400.txt",
+            50: resource_path("creation_of_ascii/50.txt"),
+            75: resource_path("creation_of_ascii/75.txt"),
+            100: resource_path("creation_of_ascii/100.txt"),
+            125: resource_path("creation_of_ascii/125.txt"),
+            150: resource_path("creation_of_ascii/150.txt"),
+            175: resource_path("creation_of_ascii/175.txt"),
+            200: resource_path("creation_of_ascii/200.txt"),
+            225: resource_path("creation_of_ascii/225.txt"),
+            250: resource_path("creation_of_ascii/250.txt"),
+            275: resource_path("creation_of_ascii/275.txt"),
+            300: resource_path("creation_of_ascii/300.txt"),
+            325: resource_path("creation_of_ascii/325.txt"),
+            350: resource_path("creation_of_ascii/350.txt"),
+            375: resource_path("creation_of_ascii/375.txt"),
+            400: resource_path("creation_of_ascii/400.txt"),
         }
-
 
 @app.command()
 def main():
